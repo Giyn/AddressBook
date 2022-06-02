@@ -9,6 +9,8 @@
 #import "AddViewController.h"
 #import "EditViewController.h"
 
+#define kFilePath [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0] stringByAppendingPathComponent:@"contacts.data"]
+
 @interface ContactViewController () <UIActionSheetDelegate, AddViewControllerDelegate, EditViewControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *contacts;
@@ -34,8 +36,11 @@
     // 根据传过来的用户名设置标题
     self.navigationItem.title = [NSString stringWithFormat:@"%@的联系人列表", self.username];
     
-    // 取消分割线(iOS8无效)
+    // 取消分割线(iOS 8无效)
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+    
+    // 解档联系人信息
+    self.contacts = [NSKeyedUnarchiver unarchiveObjectWithFile:kFilePath];
 }
 
 // 某一组有多少行
@@ -60,11 +65,17 @@
     
     // 刷新
     [self.tableView reloadData];
+    
+    // 归档联系人信息
+    [NSKeyedArchiver archiveRootObject:self.contacts toFile:kFilePath];
 }
 
 // 编辑联系人的代理方法
 - (void)editViewController:(EditViewController *)editViewController withContact:(Contact *)contact {
     [self.tableView reloadData];
+    
+    // 归档联系人信息
+    [NSKeyedArchiver archiveRootObject:self.contacts toFile:kFilePath];
 }
 
 // 只要走storyboard线 无论是自动型还是手动型都会调用
