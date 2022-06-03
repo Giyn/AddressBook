@@ -74,7 +74,7 @@
         [MBProgressHUD hideHUD];
         
         // 当用户名和密码正确的时候跳转
-        if ([self.usernameField.text isEqualToString:@"1"] && [self.passwordField.text isEqualToString:@"1"]) {
+        if ([self.usernameField.text isEqualToString:@"Giyn"] && [self.passwordField.text isEqualToString:@"123"]) {
             [self performSegueWithIdentifier:@"login2contact" sender:nil];
             
             // 保存状态

@@ -59,6 +59,17 @@
     return cell;
 }
 
+// 让tableView进入编辑模式
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    // 把数组中的元素删掉
+    [self.contacts removeObjectAtIndex:indexPath.row];
+
+    // [self.tableView reloadData];
+    
+    // 删除某一行
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+}
+
 // 添加联系人的代理方法(逆传)
 - (void)addViewController:(AddViewController *)addViewController withContact:(Contact *)contact {
     [self.contacts addObject:contact];
